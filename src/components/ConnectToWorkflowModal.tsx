@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const UploadWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) => {
+const ConnectToWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) => {
   // Create a custom theme with green primary color
   const theme = createTheme({
     palette: {
@@ -22,9 +22,7 @@ const UploadWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) 
   });
   const [label, setLabel] = useState("");
   const [description, setDescription] = useState("");
-  const [apiUrl, setApiUrl] = useState("");
-  const [apiKey, setApiKey] = useState("");
-  const [requiredParams, setRequiredParams] = useState("");
+
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -32,9 +30,7 @@ const UploadWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) 
     // Clear the fields after submission
     setLabel("");
     setDescription("");
-    setApiUrl("");
-    setApiKey("");
-    setRequiredParams("");
+
     onClose(); // Close the modal after submission
   };
 
@@ -56,7 +52,7 @@ const UploadWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) 
         }}
       >
         <Typography variant="h6" component="h2" gutterBottom>
-          Connect to your Workflow
+          Describe the workflow you are connecting to
           <IconButton
             onClick={onClose}
             sx={{ position: "absolute", top: 8, right: 8 }}
@@ -86,33 +82,7 @@ const UploadWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) 
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-          <TextField
-            label="API URL"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={apiUrl}
-            onChange={(e) => setApiUrl(e.target.value)}
-            required
-          />
-          <TextField
-            label="API Key"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            required
-          />
-          <TextField
-            label="Required Params"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={requiredParams}
-            onChange={(e) => setRequiredParams(e.target.value)}
-            required
-          />
+        
           <Button
             type="submit"
             variant="contained"
@@ -129,4 +99,4 @@ const UploadWorkflowModal = ({ open, onClose }:{open:boolean, onClose:()=>any}) 
   );
 };
 
-export default UploadWorkflowModal;
+export default ConnectToWorkflowModal;
