@@ -22,7 +22,7 @@ const IntegrateWorkflowModal = ({
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#4caf50", // Green color
+        main: "#60a5fa", // Green color
       },
     },
   });
