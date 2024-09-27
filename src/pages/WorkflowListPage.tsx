@@ -1,3 +1,5 @@
+import { useState } from "react";
+import UploadWorkflowModal from "../components/UploadWorkflowModal";
 
 const genericWorkflowData = [
   {
@@ -42,12 +44,19 @@ const genericWorkflowData = [
   },
 ];
 
-const WorkflowTable = () => {
+const WorkflowListPage = () => {
+      const [modalOpen, setModalOpen] = useState(false);
+
+      const handleOpen = () => setModalOpen(true);
+      const handleClose = () => setModalOpen(false);
   return (
     <div className="container mx-auto p-8 px-4">
       <div className="flex justify-between mb-2 ">
-        <h1 className="text-2xl font-bold mb-4">Workflows</h1>
-        <button className="bg-green-700 px-4 rounded-md">Upload </button>
+        <h1 className="text-2xl font-bold mb-4">Connect to your Workflows</h1>
+        <button className="bg-green-700 px-4 rounded-md" onClick={handleOpen}>
+          Connect{" "}
+        </button>
+        <UploadWorkflowModal open={modalOpen} onClose={handleClose} />
       </div>
       <table className="min-w-full bg-white border">
         <thead>
@@ -77,4 +86,4 @@ const WorkflowTable = () => {
   );
 };
 
-export default WorkflowTable;
+export default WorkflowListPage;

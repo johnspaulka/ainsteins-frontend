@@ -2,7 +2,7 @@ import { EnquiriesTable } from "./components/EnquiresTable";
 import { LogoHeader } from "./components/LogoHeader";
 import { SideNavbar } from "./components/SideNav";
 import { TabNav } from "./components/TabNav";
-import WorkflowTable from "./pages/WorkflowListPage";
+import WorkflowListPage from "./pages/WorkflowListPage";
 
 // Main Content Component
 const QueriesPage = () => {
@@ -23,7 +23,7 @@ const QueriesPage = () => {
         {/* Main Content */}
         <div className="w-3/4 p-8">
           {/* Table with Customer Queries List */}
-          <WorkflowTable />
+          <WorkflowListPage />
         </div>
       </div>
     </div>
