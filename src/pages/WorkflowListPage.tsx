@@ -1,5 +1,7 @@
 import { useState } from "react";
 import ConnectToWorkflowModal from "../components/ConnectToWorkflowModal";
+import { useNavigate } from 'react-router-dom';
+import EastIcon from '@mui/icons-material/East';
 
 const genericWorkflowData = [
   {
@@ -32,6 +34,12 @@ const genericWorkflowData = [
 const WorkflowListPage = () => {
       const [modalOpen, setModalOpen] = useState(false);
 
+      const navigate = useNavigate();
+
+      const handleNavigation = () => {
+        navigate('/add-tasks');
+      };
+
       const handleOpen = () => setModalOpen(true);
       const handleClose = () => setModalOpen(false);
   return (
@@ -59,6 +67,7 @@ const WorkflowListPage = () => {
               <td className="p-4 text-gray-800">{workflow.slno}</td>
               <td className="p-4 text-gray-800">{workflow.label}</td>
               <td className="p-4 text-gray-800">{workflow.description}</td>
+              <td onClick={() => handleNavigation()} className="pl-10"><EastIcon color="success" /></td>
             </tr>
           ))}
         </tbody>
