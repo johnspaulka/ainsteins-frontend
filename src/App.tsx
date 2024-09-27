@@ -2,9 +2,9 @@ import { EnquiriesTable } from "./components/EnquiresTable";
 import { LogoHeader } from "./components/LogoHeader";
 import { SideNavbar } from "./components/SideNav";
 import { TabNav } from "./components/TabNav";
-import WorkflowTable from "./pages/WorkflowListPage";
 import QueryDetails from "./pages/QueryDetails"
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import WorkflowListPage from "./pages/WorkflowListPage";
 
 // Main Content Component
 const QueriesPage = () => {
@@ -27,13 +27,11 @@ const QueriesPage = () => {
         <div className="w-3/4 py-8 h-1/2">
         <Router>
         <Routes>
-        <Route path="/" element={<WorkflowTable />} />
+        <Route path="/" element={<WorkflowListPage />} />
         <Route path="/enquiries" element={<EnquiriesTable />} />
         <Route path="/enquiries/details" element={<QueryDetails />} />
       </Routes>
       </Router>
-    
-          {/* Table with Customer Queries List */}
           
         </div>
       </div>
