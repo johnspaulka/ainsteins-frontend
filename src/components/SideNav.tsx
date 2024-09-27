@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LogoHeader } from "./LogoHeader";
 
 export const SideNavbar = () => {
    const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const SideNavbar = () => {
     },
     {
       id: 2,
-      name: "Connect to Workflows",
+      name: "Workflows",
       route:'/connect-to-workflows'
     },
   ];
@@ -24,18 +25,19 @@ export const SideNavbar = () => {
   }
 
   return (
-    <div className="bg-gray-100 h-screen w-64 fixed left-0 top-0">
-      <div className="flex flex-col space-y-6 py-4 px-6">
+    <div className="bg-gray-100 h-screen shadow-inner">
+      <LogoHeader />
+      <div className="flex flex-col space-y-6 py-4 text-center">
         {tabs.map((tab) => (
-          <button
+          <div
             key={tab.id}
             onClick={() => handleTabChange(tab)}
-            className={`w-full text-left px-4 py-2 rounded-md ${
-              activeTab === tab ? "bg-green-200 text-green-800 font-bold" : ""
+            className={`w-full px-8 py-2 text-left cursor-pointer hover:bg-slate-600 hover:text-white ${
+              activeTab === tab ? "bg-gray-200 text-gray-700 font-bold" : ""
             }`}
           >
             {tab.name}
-          </button>
+          </div>
         ))}
       </div>
     </div>
