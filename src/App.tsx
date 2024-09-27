@@ -28,7 +28,7 @@ const QueriesPage = () => {
             <Routes>
               <Route path="/" element={<WorkflowListPage />} />
               <Route path="/enquiries" element={<EnquiriesTable />} />
-              <Route path="/enquiries/details" element={<QueryDetails />} />
+              <Route path="/enquiries/:id" element={<QueryDetails />} />
               <Route path="/connect-to-workflows" element={<WorkflowListPage />} />
             </Routes>
           </div>

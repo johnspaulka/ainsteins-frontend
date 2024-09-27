@@ -3,12 +3,16 @@ import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
 import formatDate from '../../utils/formatDate';
 import { Howl } from "howler";
+import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const DetailsView = () => {
   const [enquiryDetails, setEnquiryDetails] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+
+  const { id } = useParams();
 
   const lastMessageUser = enquiryDetails?.messages?.[enquiryDetails?.messages.length - 1].user;
   let intervalId:any;
@@ -20,7 +24,7 @@ const DetailsView = () => {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('https://ainstein-api-black-voice-1238.fly.dev/conversations/f88c1175-3b68-4f79-831e-1a3b74427bf8'); // Replace with your actual API
+        const response = await fetch(`https://ainstein-api-black-voice-1238.fly.dev/conversations/${id}`); // Replace with your actual API
         if (!response.ok) {
           throw new Error('Failed to fetch enquiry details');
         }
@@ -33,13 +37,10 @@ const DetailsView = () => {
       }
     };
 
-    // Initial fetch
     fetchEnquiryDetails();
 
-    // Polling every second
-    //  intervalId = setInterval(fetchEnquiryDetails, 5000);
+     intervalId = setInterval(fetchEnquiryDetails, 2000);
 
-    // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 
@@ -48,9 +49,6 @@ const DetailsView = () => {
       clearInterval(intervalId);
     }
   },[enquiryDetails]);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error}</div>;
 
   const playAudio =  async (audio: any) => {
     console.log(audio)
@@ -71,7 +69,7 @@ const DetailsView = () => {
   };
 
 
-  return (
+  return loading ? <div className='w-full h-60 flex justify-center items-center'><CircularProgress color="success" /></div> :  (
     <div className="flex flex-1 h-[900px]">
       <div className="w-2/5 p-6 my-10">
         <h1 className="text-3xl font-bold mb-4">Query Details</h1>
