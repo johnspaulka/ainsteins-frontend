@@ -2,6 +2,7 @@ import { EnquiriesTable } from "./components/EnquiresTable";
 import { LogoHeader } from "./components/LogoHeader";
 import { SideNavbar } from "./components/SideNav";
 import { TabNav } from "./components/TabNav";
+import WorkflowTable from "./pages/WorkflowListPage";
 
 // Main Content Component
 const QueriesPage = () => {
@@ -15,14 +16,14 @@ const QueriesPage = () => {
 
       <div className="flex">
         {/* Left Sidebar */}
-        <div className="w-1/4">
+        <div className="w-1/5">
           <SideNavbar />
         </div>
 
         {/* Main Content */}
         <div className="w-3/4 p-8">
           {/* Table with Customer Queries List */}
-          <EnquiriesTable />
+          <WorkflowTable />
         </div>
       </div>
     </div>
