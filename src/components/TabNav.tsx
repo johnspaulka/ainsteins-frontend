@@ -1,6 +1,6 @@
 export const TabNav = () => {
   return (
-    <div className="bg-green-700 text-white">
+    <div className="bg-green-700 text-white flex-1">
       <div className="container mx-auto flex justify-between py-4 px-8">
         <div className="flex space-x-6">
           <div className="font-bold text-xl">+</div>
@@ -19,4 +19,4 @@ export const TabNav = () => {
       </div>
     </div>
   );
-};
+}
