@@ -5,6 +5,7 @@ import { TabNav } from "./components/TabNav";
 import QueryDetails from "./pages/QueryDetails"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WorkflowListPage from "./pages/WorkflowListPage";
+import MapWorkflow from "./pages/MapWorkflow";
 
 // Main Content Component
 const QueriesPage = () => {
@@ -30,6 +31,7 @@ const QueriesPage = () => {
               <Route path="/enquiries" element={<EnquiriesTable />} />
               <Route path="/enquiries/:id" element={<QueryDetails />} />
               <Route path="/connect-to-workflows" element={<WorkflowListPage />} />
+              <Route path="/map-to-workflows" element={<MapWorkflow />} />
             </Routes>
           </div>
         </div>

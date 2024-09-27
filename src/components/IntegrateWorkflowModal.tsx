@@ -14,9 +14,11 @@ import CloseIcon from "@mui/icons-material/Close";
 const IntegrateWorkflowModal = ({
   open,
   onClose,
+  submitWorkflow,
 }: {
   open: boolean;
   onClose: () => any;
+  submitWorkflow?: (data?: any) => any;
 }) => {
   // Create a custom theme with green primary color
   const theme = createTheme({
@@ -36,6 +38,7 @@ const IntegrateWorkflowModal = ({
     event.preventDefault();
 
     // Clear the fields after submission
+    submitWorkflow?.(label);
     setLabel("");
     setDescription("");
     setApiUrl("");
