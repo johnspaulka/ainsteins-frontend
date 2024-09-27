@@ -71,6 +71,7 @@
       var recorder;
       var audioContext;
       var isRecording = false;
+      let isAudioPlaying = false;
       var ws;
 
       function toggleRecording() {
@@ -86,48 +87,69 @@
         ws = new WebSocket("wss://ainstein-api-black-voice-1238.fly.dev/ws");
         ws.binaryType = "arraybuffer";
 
+        // Create audio queue
+        const audioQueue = [];
+
+        // Track current audio
+        let currentAudio = null;
+
         // Handle incoming messages (audio playback)
-        ws.onmessage = function (event) {
-          var messages = document.getElementById("messages");
-          var message = document.createElement("li");
-          var audio = document.createElement("audio");
+        ws.onmessage = async function (event) {
+          const audio = document.createElement("audio");
           audio.controls = true;
           audio.src = URL.createObjectURL(
             new Blob([event.data], { type: "audio/wav" })
           );
-          <!-- message.appendChild(audio); -->
-          <!-- messages.appendChild(message); -->
-          audio.play();
+
+          // Add audio to the queue
+          audioQueue.push(audio);
+
+          // Check if no audio is currently playing, play the first one
+          if (!currentAudio) {
+            currentAudio = audioQueue.shift(); // Remove from queue and set as current
+            currentAudio.play();
+
+            currentAudio.addEventListener("ended", () => {
+              currentAudio = null; // Reset current audio
+              playNextAudio(); // Play next audio from queue (if any)
+            });
+          }
         };
+
+        // Helper function to play the next audio in the queue
+        function playNextAudio() {
+          if (audioQueue.length > 0) {
+            currentAudio = audioQueue.shift();
+            currentAudio.play();
+            currentAudio.addEventListener("ended", () => {
+              currentAudio = null;
+              playNextAudio();
+            });
+          }
+        }
 
         // Get user's microphone input
         navigator.mediaDevices
           .getUserMedia({ audio: true })
           .then(function (stream) {
-            console.log("Accessing microphone");
             audioContext = new (window.AudioContext ||
               window.webkitAudioContext)();
             var input = audioContext.createMediaStreamSource(stream);
-
             // Initialize Recorder.js with mono configuration
             recorder = new Recorder(input, { numChannels: 1 });
-            console.log("Recorder initialized");
             // Start recording
             recorder.record();
-            console.log("Recording started");
             document.getElementById("recordButton").innerText =
               "Stop Recording";
             isRecording = true;
 
-            // Send WAV data at intervals
+            // Send WAV data at intervals (optional)
             sendAudioChunks();
-            console.log("Sending audio chunks");
           })
           .catch(function (err) {
             console.error("Error accessing microphone: ", err);
           });
       }
-
       function stopRecording() {
         recorder.stop(); // Stop recording
 
@@ -142,9 +164,7 @@
 
       function sendAudioChunks() {
         if (isRecording) {
-          console.log("Sending audio chunk");
           recorder.exportWAV(function (blob) {
-            console.log("Sending through ws");
             ws.send(blob); // Send each WAV chunk via WebSocket
             recorder.clear(); // Clear the recorder buffer after sending
           });
