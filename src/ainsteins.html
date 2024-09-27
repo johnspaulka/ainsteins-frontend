@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Voice Chat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.js"></script>
+</head>
+
+<body>
+  <h1>WebSocket Voice Chat</h1>
+  <button id="recordButton" onclick="toggleRecording()">Start Recording</button>
+  <ul id='messages'></ul>
+
+  <script>
+    var recorder;
+    var audioContext;
+    var isRecording = false;
+    var ws;
+
+    function toggleRecording() {
+      if (isRecording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    }
+
+    function startRecording() {
+      // Initialize WebSocket
+      ws = new WebSocket("wss://ainstein-api-hidden-feather-8243.fly.dev/ws");
+      ws.binaryType = "arraybuffer";
+
+      // Handle incoming messages (audio playback)
+      ws.onmessage = function (event) {
+        var messages = document.getElementById('messages');
+        var message = document.createElement('li');
+        var audio = document.createElement('audio');
+        audio.controls = true;
+        audio.src = URL.createObjectURL(new Blob([event.data], { type: 'audio/wav' }));
+        message.appendChild(audio);
+        messages.appendChild(message);
+      };
+
+      // Get user's microphone input
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (stream) {
+          console.log("Accessing microphone");
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          var input = audioContext.createMediaStreamSource(stream);
+
+          // Initialize Recorder.js with mono configuration
+          recorder = new Recorder(input, { numChannels: 1 });
+          console.log("Recorder initialized");
+          // Start recording
+          recorder.record();
+          console.log("Recording started");
+          document.getElementById("recordButton").innerText = "Stop Recording";
+          isRecording = true;
+
+          // Send WAV data at intervals
+          sendAudioChunks();
+          console.log("Sending audio chunks");
+        })
+        .catch(function (err) {
+          console.error("Error accessing microphone: ", err);
+        });
+    }
+
+    function stopRecording() {
+      recorder.stop(); // Stop recording
+
+      // Export WAV file and send to WebSocket
+      recorder.exportWAV(function (blob) {
+        ws.send(blob);
+      });
+
+      document.getElementById("recordButton").innerText = "Start Recording";
+      isRecording = false;
+    }
+
+    function sendAudioChunks() {
+      if (isRecording) {
+        console.log("Sending audio chunk");
+        recorder.exportWAV(function (blob) {
+          console.log("Sending through ws");
+          ws.send(blob); // Send each WAV chunk via WebSocket
+          recorder.clear(); // Clear the recorder buffer after sending
+        });
+
+        // Keep sending audio chunks every 2 seconds
+        setTimeout(sendAudioChunks, 4000);
+      }
+    }
+  </script>
+</body>
+
+</html>
