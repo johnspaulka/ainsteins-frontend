@@ -35,10 +35,10 @@ const WorkflowListPage = () => {
       const handleOpen = () => setModalOpen(true);
       const handleClose = () => setModalOpen(false);
   return (
-    <div className="container mx-auto p-8 px-4">
+    <div className="container mx-auto">
       <div className="flex justify-between mb-2 ">
         <h1 className="text-2xl font-bold mb-4">Connect to your Workflows</h1>
-        <button className="bg-green-700 px-4 rounded-md" onClick={handleOpen}>
+        <button className="bg-blue-400 px-4 rounded-md text-white font-semibold" onClick={handleOpen}>
           Connect{" "}
         </button>
         <ConnectToWorkflowModal open={modalOpen} onClose={handleClose} />
