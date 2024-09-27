@@ -1,12 +1,8 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import WelcomePage from "./pages";
+import QueriesPage from "./pages/QueryListPage";
 
 function App() {
-  return (
-   <WelcomePage />
-  );
+  return <QueriesPage />;
 }
 
 export default App;
