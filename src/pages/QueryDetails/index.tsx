@@ -82,7 +82,7 @@ const DetailsView = () => {
     </div>
 
     <div className="flex justify-between items-center mb-4">
-      <div className="text-gray-500">Feedback</div>
+      <div className="text-gray-500">Feedback Rating</div>
       <div className="text-black text-right">{enquiryDetails.feedback || '-'}</div>
     </div>
 
