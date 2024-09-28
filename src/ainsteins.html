@@ -191,7 +191,6 @@
         } else {
           dialer.style.display = "none";
           callingUi.style.display = "flex";
-          startTimer();
           startRecording();
         }
       }
@@ -212,6 +211,10 @@
           const callingDialingText = document.getElementById(
             "dailing-calling-text"
           );
+          const timerValue = document.getElementById("timer").innerText;
+          if (`${timerValue}` == "00:00") {
+            startTimer();
+          }
           const timer = document.getElementById("timer");
           timer.style.display = "flex";
           callingDialingText.textContent = "Calling...";
