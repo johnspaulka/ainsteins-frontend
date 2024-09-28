@@ -59,7 +59,7 @@ const DetailsView = () => {
   return loading ? <div className='w-full h-60 flex justify-center items-center'><CircularProgress color="success" /></div> :  (
     <div className="flex flex-1 h-[900px]">
       <div className="w-2/5 p-6 my-10">
-  <h1 className="text-3xl font-bold mb-4">Query Details</h1>
+  <h1 className="text-3xl font-bold mb-4">Enquiry Details</h1>
   
   <div className="grid grid-cols-1 gap-6 pt-20 text-lg font-semibold">
 
